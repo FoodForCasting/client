@@ -85,3 +85,36 @@ p{
     background: #FF0000;
 }
 
+/* ----- */
+
+form {
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+}
+form input {
+    margin: 15px 0;
+    padding: 15px 10px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #bbb;
+    border-radius: 20px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+form input[type="password"]:focus,
+form input[type=text]:focus {
+    border-color: cornflowerblue;
+}
+
+input[type=submit] {
+    float: none !important;
+    padding: 15px 50px;
+    width: auto;
+    background: #1abc9c;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+}
