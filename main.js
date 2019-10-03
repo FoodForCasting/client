@@ -41,3 +41,38 @@ function initMap(lat = -6.72732, lng = 107.24593) {
 }
 
 
+$('#register').submit(e => {
+    e.preventDefault();
+    $.ajax({
+        method:'post',
+        url: `http://localhost:3000/user/register`,
+        data: {
+            username: `${$("#regname").val()}`,
+            password: `${$("#regpass").val()}`
+        }
+    })
+        .done(token => {
+            localStorage.setItem('token', token)
+        })
+        .fail(console.log)
+})
+
+$('#login').submit(e => {
+    e.preventDefault();
+    $.ajax({
+        method:'post',
+        url: `http://localhost:3000/user/login`,
+        data: {
+            username: `${$("#logname").val()}`,
+            password: `${$("#logpass").val()}`
+        }
+    })
+        .done(token => {
+            localStorage.setItem('token', token)
+        })
+        .fail(console.log)
+})
+
+function signOut() {
+    localStorage.removeItem('token')
+}
