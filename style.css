@@ -1,0 +1,28 @@
+#map {
+    height: 400px;
+    width: 770px;
+}
+
+.card{
+    margin: 5px;
+}
+input#restaurant{
+    width: 800px
+}
+
+
+#user-container{
+    height: 100vh;
+}
+
+
+
+#main-page{
+    height: 95vh;
+    padding-top: 25px;
+}
+#resto-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
