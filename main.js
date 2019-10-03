@@ -54,7 +54,11 @@ $('#register').submit(e => {
         .done(token => {
             localStorage.setItem('token', token)
         })
-        .fail(console.log)
+        .fail(err => {
+            $('#err').empty()
+            $('#err').append(`<h1>${err.responseJSON.message}</h1>`)
+            // console.log(err);
+        })
 })
 
 $('#login').submit(e => {
@@ -70,9 +74,32 @@ $('#login').submit(e => {
         .done(token => {
             localStorage.setItem('token', token)
         })
-        .fail(console.log)
+        .fail(err => {
+            $('#err').empty()
+            $('#err').append(`<h1>${err.responseJSON.message}</h1>`)
+            // console.log(err);
+        })
 })
 
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;   
+    $.ajax({
+        url: 'http://localhost:3000/user/signGoogle',
+        method: 'post',
+        data:{
+            id_token
+        }
+    })
+        .done((token) => {
+            localStorage.setItem('token', token)
+        })
+}
+
 function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
     localStorage.removeItem('token')
 }

@@ -21,6 +21,9 @@
     crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="style.css">
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="227948699050-ml75o10n5ftpfo4d5069bqvjtri10pr2.apps.googleusercontent.com">
   <title>Doc</title>
 </head>
 
@@ -39,12 +42,16 @@
       <form id="login">
         <input type="text" id="logname" placeholder="Username">
         <input type="text" id="logpass" placeholder="Password">
-        <input type="submit" value="Register">
+        <input type="submit" value="Login">
       </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </div>
   <div class="signout">
       <button onclick="signOut();">Sign out</button>
+  </div>
+  <div id="err">
+
   </div>
   <div class="container">
 
