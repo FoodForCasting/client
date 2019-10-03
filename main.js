@@ -124,6 +124,25 @@ $('#login').submit(e => {
         })
 })
 
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;   
+    $.ajax({
+        url: 'http://localhost:3000/user/signGoogle',
+        method: 'post',
+        data:{
+            id_token
+        }
+    })
+        .done((token) => {
+            localStorage.setItem('token', token)
+        })
+}
+
 function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
     localStorage.removeItem('token')
 }
