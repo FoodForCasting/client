@@ -1,4 +1,7 @@
 /* register login punya evan */
+body {
+    background-image: url('bg.jpg');
+}
 .sign {
     display: flex;
 }
@@ -35,10 +38,13 @@ p{
     overflow: scroll;
 }
 
-
+.logo {
+    width: 15vw !important;
+}
 #user-container{
     height: 100vh;
-    background-image: url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg');
+    /* background-image: url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg'); */
+    /* background-image: url('bg.png'); */
     overflow: hidden;
     padding-top: 5vh;
 }
@@ -46,6 +52,9 @@ p{
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: black;
+    font-weight: bold;
+    text-shadow: 1px 1px white;
 }
 #user-information img{
     width: 200px;
@@ -68,6 +77,7 @@ p{
     padding-top: 25px;
     overflow: scroll;
     padding-left: 20px;
+    
 }
 #resto-list{
     display: flex;
@@ -90,7 +100,8 @@ p{
 
 form {
     padding: 30px;
-    background: white;
+    /* background: white; */
+    background-color: rgba(236, 240, 241,0.8);
     border-radius: 10px;
 }
 form input {

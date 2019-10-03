@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     // $(`#map`).hide() //HIDE MAPS
     
     //MODAL
@@ -13,9 +13,9 @@ $(document).ready(function(){
         $(`#signinbtn`).hide()
         $(`#user-information`).empty()
         $(`#user-information`).append(
-                `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
-                <h5><b>Username</b></h5>
-                <p>email</p>`
+            `<img src=http://localhost:3000/myAvatars/${$("#logname").val()}" alt="" class="img-thumbnail"></img>
+            <h5><b>${$("#logname").val()}</b></h5>
+            <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
         )
         $(`#user-wishes`).empty()
         for(let i = 0; i < 5; i++){
@@ -30,7 +30,7 @@ $(document).ready(function(){
             )
         }
     }else{
-        $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
+        // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
         $(`#signoutbtn`).hide()
         $(`#signinbtn`).show()
     }    
@@ -117,6 +117,9 @@ $(document).ready(function(){
 })
 
 
+setTimeout(function(){
+    $('#modalForm').modal('hide')
+  }, 10000);
 
 //GOOGLE MAPS INIT MAP
 var map;
@@ -148,6 +151,7 @@ $('#register').submit(e => {
         }
     })
         .done(token => {
+            $("#logpass").val('')
             localStorage.setItem('token', token)
         })
         .fail(err=>{
@@ -167,16 +171,19 @@ $('#login').submit(e => {
             password: `${$("#logpass").val()}`
         }
     })
-        .done(token => {
+        .done((token)=> {
+            let data = $("#logname").val()
+            $("#logpass").val('')
+            $("#logname").val('')
             localStorage.setItem('token', token)
             $(`#signinbtn`).hide()
             $(`#signoutbtn`).show()
 
             $(`#user-information`).empty()
             $(`#user-information`).append(
-                    `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
-                    <h5><b>Username</b></h5>
-                    <p>email</p>`
+                    `<img src=http://localhost:3000/myAvatars/${data}" alt="" class="img-thumbnail"></img>
+                    <h5><b>${data}</b></h5>
+                    <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
             )
             $(`#user-wishes`).empty()
             for(let i = 0; i < 5; i++){
@@ -214,9 +221,9 @@ function onSignIn(googleUser) {
 
             $(`#user-information`).empty()
             $(`#user-information`).append(
-                    `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
-                    <h5><b>Username</b></h5>
-                    <p>email</p>`
+                `<img src=http://localhost:3000/myAvatars/${profile.getName()}" alt="" class="img-thumbnail"></img>
+                <h5><b>${profile.getName()}</b></h5>
+                <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
             )
             $(`#user-wishes`).empty()
             for(let i = 0; i < 5; i++){
@@ -242,7 +249,8 @@ function signOut() {
 
     $(`#signoutbtn`).hide()
     $(`#signinbtn`).show()
-    $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
+    
+    // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
     $(`#user-information`).empty()
     $(`#user-wishes`).empty()
 }
