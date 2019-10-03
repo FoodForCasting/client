@@ -44,7 +44,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
@@ -62,7 +62,10 @@
     <div class="row">
 
       <div class="col-3" id="user-container">
-
+        <div id="user-information"></div>
+        <div id="user-wishlist">
+          <ul class="list-group list-group-flush" id="user-wishes"></ul>
+        </div>
       </div>
 
       <div class="col-9" id="main-page">
@@ -70,10 +73,13 @@
           <form class="form-inline">
             <div class="form-group mx-sm-3 mb-2">
               <label for="restaurant" class="sr-only">Restaurant</label>
-              <input type="text" class="form-control" id="restaurant" placeholder="Search restaurant here...">
+              <input type="text" class="form-control form-control-sm" id="restaurant" placeholder="Search restaurant here...">
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
+            <button type="submit" class="btn btn-sm btn-primary mb-2">Search</button>
           </form>
+          
+          <button type="button" class="btn btn-warning btn-sm">Logout</button>
+
         </div>
         <div id="resto-list" class="row"></div>
       </div>
