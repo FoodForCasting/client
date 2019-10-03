@@ -155,15 +155,17 @@
 
       <div class="col-9" id="main-page">
         <div id="search-bar">
-          <form class="form-inline">
+              <form class="form-inline" id="search-zomato">
             <div class="form-group mx-sm-3 mb-2">
-              <label for="restaurant" class="sr-only">Restaurant</label>
-              <input type="text" class="form-control form-control-sm" id="restaurant" placeholder="Search restaurant here...">
+                <label for="restaurant" class="sr-only"></label>
+                <input type="text" class="form-control form-control-sm" name="location" id="location" placeholder="your location...">
+                <label for="restaurant" class="sr-only"></label>
+                <input type="text" class="form-control form-control-sm" name="food" id="food" placeholder="type of food">
             </div>
             <button type="submit" class="btn btn-sm btn-primary mb-2">Search</button>
 
- <a href="" class="btn btn-default btn-primary mx-2 mb-2" data-toggle="modal" data-target="#modalLRForm">Login</a>
- <button onclick="signOut();" class="btn btn-warning btn-sm mx-2 mb-2">Sign out</button>
+ <a href="" class="btn btn-default btn-primary mx-2 mb-2" data-toggle="modal" data-target="#modalLRForm" id="signinbtn">Login</a>
+ <button onclick="signOut();" class="btn btn-warning btn-sm mx-2 mb-2" id="signoutbtn">Sign out</button>
           </form>
           <!-- ------- -->
           <!-- <div class="text-center">

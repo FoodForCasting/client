@@ -8,23 +8,32 @@ $(document).ready(function(){
     //generate user information
     //ajax to fetch user information from server
     //
-    $(`#user-information`).append(
-        `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
-        <h5><b>Username</b></h5>
-        <p>email</p>`
-    )
-    for(let i = 0; i < 5; i++){
-        $(`#user-wishes`).append(
-            `<div class="card" >
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-sm btn-danger" ">discard</a>
-            </div>
-            </div>`
+    if(localStorage.getItem('token')){
+        $(`#signoutbtn`).show()
+        $(`#signinbtn`).hide()
+        $(`#user-information`).empty()
+        $(`#user-information`).append(
+                `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
+                <h5><b>Username</b></h5>
+                <p>email</p>`
         )
-    }
-    
+        $(`#user-wishes`).empty()
+        for(let i = 0; i < 5; i++){
+            $(`#user-wishes`).append(
+                `<div class="card" >
+                <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-sm btn-danger" ">discard</a>
+                </div>
+                </div>`
+            )
+        }
+    }else{
+        $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
+        $(`#signoutbtn`).hide()
+        $(`#signinbtn`).show()
+    }    
 
     //generate resto list
     // ajax to fetch resto list from server
@@ -49,7 +58,7 @@ $(document).ready(function(){
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
                     <p class="card-text">${resto.restaurant.location.address}</p>
-                    
+                    <p><span>rating : ${resto.restaurant.user_rating.aggregate_rating}/5</span></p>       
         
                     
                     </div>
@@ -61,6 +70,49 @@ $(document).ready(function(){
         alert(err)
     })  
     
+     //SEARCH ZOMATO
+     $(`#search-zomato`).on('submit' , (e) => {
+        e.preventDefault()
+        let city = $(`#location`).val()
+        let food = $(`#food`).val()
+        $(`#location`).val('')
+        $(`#food`).val('')
+        //AJAX FETCH FROM SERVER
+        $.ajax({
+            method: 'post',
+            url:  `http://localhost:3000/zomato/search`,
+            data : {
+                city,food
+            }
+        })
+        .done(({restaurants}) => {
+            $(`#resto-list`).empty()
+            restaurants.forEach(resto => {
+                $(`#resto-list`).append(
+                    `<div class="card" style="width: 15rem;">
+                    <img class="card-img-top" src="${(resto.restaurant.thumb) ? resto.restaurant.thumb : 'https://pixel77.com/wp-content/uploads/2013/11/pixel77-free-vector-flat-food-icons-1114-300.jpg' }" style="margin-bottom:1vh;" alt="Card image cap">
+                    <div class="card-body">
+                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="initMap(${resto.restaurant.location.latitude},${resto.restaurant.location.longitude})"  data-target="#myMap">
+                    location
+                    </button>
+                    
+                    <button type="button" class="btn btn-sm btn-success">
+                    add to wishlist
+                    </button>
+                    <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
+                    <p class="card-text">${resto.restaurant.location.address}</p>
+                    <p><span>rating : ${resto.restaurant.user_rating.aggregate_rating}/5</span></p>                    
+                    </div>
+                </div>`
+                )
+            })
+        })
+        .fail(err => {
+            console.log(err)
+        })
+    })
+
+
     
 })
 
@@ -117,6 +169,27 @@ $('#login').submit(e => {
     })
         .done(token => {
             localStorage.setItem('token', token)
+            $(`#signinbtn`).hide()
+            $(`#signoutbtn`).show()
+
+            $(`#user-information`).empty()
+            $(`#user-information`).append(
+                    `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
+                    <h5><b>Username</b></h5>
+                    <p>email</p>`
+            )
+            $(`#user-wishes`).empty()
+            for(let i = 0; i < 5; i++){
+                $(`#user-wishes`).append(
+                    `<div class="card" >
+                    <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-sm btn-danger" ">discard</a>
+                    </div>
+                    </div>`
+                )
+            }
         })
         .fail(err=>{
             $('.errLogin').empty()
@@ -136,6 +209,27 @@ function onSignIn(googleUser) {
     })
         .done((token) => {
             localStorage.setItem('token', token)
+            $(`#signinbtn`).hide()
+            $(`#signoutbtn`).show()
+
+            $(`#user-information`).empty()
+            $(`#user-information`).append(
+                    `<img src="https://www.chrislatta.org/images/graphics/backgrounds/solid-backgrounds-black-000000-300x300-Thumb.png?v=20171211195613" alt="" class="img-thumbnail"></img>
+                    <h5><b>Username</b></h5>
+                    <p>email</p>`
+            )
+            $(`#user-wishes`).empty()
+            for(let i = 0; i < 5; i++){
+                $(`#user-wishes`).append(
+                    `<div class="card" >
+                    <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-sm btn-danger" ">discard</a>
+                    </div>
+                    </div>`
+                )
+            }
         })
 }
 
@@ -145,4 +239,10 @@ function signOut() {
       console.log('User signed out.');
     });
     localStorage.removeItem('token')
+
+    $(`#signoutbtn`).hide()
+    $(`#signinbtn`).show()
+    $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
+    $(`#user-information`).empty()
+    $(`#user-wishes`).empty()
 }
