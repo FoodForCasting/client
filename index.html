@@ -22,33 +22,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="227948699050-ml75o10n5ftpfo4d5069bqvjtri10pr2.apps.googleusercontent.com">
   <link rel="stylesheet" href="style.css">
-  <title>Doc</title>
+  <title>FoodForCasting</title>
 </head>
 
 <body>
-  <!-- <div class="sign">
-    <div class="register">
-      <h1>Register</h1>
-      <form id="register">
-        <input type="text" id="regname" placeholder="Username">
-        <input type="text" id="regpass" placeholder="Password">
-        <input type="submit" value="Register">
-      </form>
-    </div>
-    <div class="login">
-      <h1>Login</h1>
-      <form id="login">
-        <input type="text" id="logname" placeholder="Username">
-        <input type="text" id="logpass" placeholder="Password">
-        <input type="submit" value="Register">
-      </form>
-    </div>
-  </div> -->
-  <!-- <div class="signout">
-      <button onclick="signOut();">Sign out</button>
-  </div> -->
 
   <div class="container">
 
@@ -123,7 +103,8 @@
             <!--Footer-->
             <div class="modal-footer">
               <div class="options text-center text-md-right mt-1">
-                <p>Login with Google <a href="#" class="blue-text">Login Google</a></p>
+                <p>Login with Google</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
               </div>
               <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
             </div>
