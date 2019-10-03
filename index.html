@@ -8,12 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="./assets//dist//css/map-icons.css">
-    <script src="./assets/dist/js/map-icons.js"></script>
-
-
-
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -174,20 +169,20 @@
 
       <div class="col-9" id="main-page">
         <div id="search-bar">
-          <form class="form-inline">
+          <form class="form-inline" id="search-zomato">
             <div class="form-group mx-sm-3 mb-2">
-              <label for="restaurant" class="sr-only">Restaurant</label>
-              <input type="text" class="form-control form-control-sm" id="restaurant" placeholder="Search restaurant here...">
+              <label for="restaurant" class="sr-only"></label>
+              <input type="text" class="form-control form-control-sm" name="location" id="location" placeholder="your location...">
+              <label for="restaurant" class="sr-only"></label>
+              <input type="text" class="form-control form-control-sm" name="food" id="food" placeholder="type of food">
             </div>
             <button type="submit" class="btn btn-sm btn-primary mb-2">Search</button>
           </form>
           <!-- ------- -->
-          <div class="text-center">
-            <a href="" class="btn btn-default btn-primary" data-toggle="modal" data-target="#modalLRForm">Login</a>
-          </div>
           <!-- ------------ -->
           <!-- <div class="signout"> -->
-            <button onclick="signOut();" class="btn btn-warning btn-sm">Sign out</button>
+              <button onclick="signOut();" id="signinbtn" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalLRForm">Sign in</button>
+            <button onclick="signOut();" id="signoutbtn" class="btn btn-warning btn-sm">Sign out</button>
         <!-- </div> -->
           <!-- <button type="button" class="btn btn-warning btn-sm">Logout</button> -->
 

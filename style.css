@@ -21,8 +21,9 @@
 .card{
     margin: 5px;
 }
-input#restaurant{
-    width: 600px
+input#location , input#food{
+    width: 300px;
+    margin: auto .5vh;
 }
 p{
     font-size: 12px;
@@ -58,7 +59,7 @@ p{
 }
 #search-bar button{
     height: 35px;
-    width: 10   0px;
+    width: 100px;
 }
 
 
