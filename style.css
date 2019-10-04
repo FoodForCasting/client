@@ -101,7 +101,7 @@ p{
 form {
     padding: 30px;
     /* background: white; */
-    background-color: rgba(236, 240, 241,0.8);
+    /* background-color: rgba(236, 240, 241,0.8); */
     border-radius: 10px;
 }
 form input {

@@ -37,7 +37,7 @@ $(document).ready(function(){
 
     //generate resto list
     // ajax to fetch resto list from server
-    //
+    //initial resto list
     $.ajax({
         method: 'get',
         url:  `http://localhost:3000/zomato/nearby`
@@ -53,7 +53,7 @@ $(document).ready(function(){
                     location
                     </button>
                     
-                    <button type="button" class="btn btn-sm btn-success">
+                    <button type="button" class="btn btn-sm btn-success" onclick="addWishlist(${resto})">
                     add to wishlist
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
@@ -96,7 +96,7 @@ $(document).ready(function(){
                     location
                     </button>
                     
-                    <button type="button" class="btn btn-sm btn-success">
+                    <button type="button" class="btn btn-sm btn-success" onclick="addWishlist(this)" data-resto="${resto.restaurant}">
                     add to wishlist
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
@@ -116,10 +116,6 @@ $(document).ready(function(){
     
 })
 
-
-setTimeout(function(){
-    $('#modalForm').modal('hide')
-  }, 10000);
 
 //GOOGLE MAPS INIT MAP
 var map;
@@ -154,6 +150,11 @@ $('#register').submit(e => {
             $("#logpass").val('')
             $('.successRegis').append(`<p style="color:green;">Successfully Registered</p>`)
             localStorage.setItem('token', token)
+
+        setTimeout(function(){
+            $('#modalForm').modal('hide')
+        }, 3000);
+
         })
         .fail(err=>{
             $('.errRegis').empty()
@@ -200,6 +201,9 @@ $('#login').submit(e => {
                     </div>`
                 )
             }
+            setTimeout(function(){
+                $('#modalForm').modal('hide')
+            }, 3000);
         })
         .fail(err=>{
             $('.errLogin').empty()
@@ -219,6 +223,7 @@ function onSignIn(googleUser) {
     })
         .done((token) => {
             localStorage.setItem('token', token)
+            $('.successLogin').append(`<p style="color:green;">Successfully Login</p>`)
             $(`#signinbtn`).hide()
             $(`#signoutbtn`).show()
 
@@ -240,6 +245,9 @@ function onSignIn(googleUser) {
                     </div>`
                 )
             }
+            setTimeout(function(){
+                $('#modalForm').modal('hide')
+            }, 5000);
         })
 }
 
@@ -249,11 +257,33 @@ function signOut() {
       console.log('User signed out.');
     });
     localStorage.removeItem('token')
-
+    $('.successLogin').hide()
     $(`#signoutbtn`).hide()
     $(`#signinbtn`).show()
     
     // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
     $(`#user-information`).empty()
     $(`#user-wishes`).empty()
+}
+
+
+function addWishlist(identifier){ //resto = object
+    let resto = $(identifier).data('resto')
+    console.log(resto)
+    $.ajax({
+        method: 'patch',
+        url:  `http://localhost:3000/addWiishlist`,
+        data : {
+            resto
+        },
+        headers: {
+            token : localStorage.getItem('token')
+        }
+    })
+    .done( _ => {
+        console.log('haha')
+    })
+    .fail(err => {
+        console.log(err)
+    })
 }
