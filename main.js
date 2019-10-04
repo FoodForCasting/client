@@ -152,6 +152,7 @@ $('#register').submit(e => {
     })
         .done(token => {
             $("#logpass").val('')
+            $('.successRegis').append(`<p style="color:green;">Successfully Registered</p>`)
             localStorage.setItem('token', token)
         })
         .fail(err=>{
@@ -172,9 +173,11 @@ $('#login').submit(e => {
         }
     })
         .done((token)=> {
+            
             let data = $("#logname").val()
             $("#logpass").val('')
             $("#logname").val('')
+            $('.successLogin').append(`<p style="color:green;">Successfully Login</p>`)
             localStorage.setItem('token', token)
             $(`#signinbtn`).hide()
             $(`#signoutbtn`).show()
