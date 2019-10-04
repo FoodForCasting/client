@@ -88,7 +88,6 @@ $(document).ready(function(){
         .done(({restaurants}) => {
             $(`#resto-list`).empty()
             restaurants.forEach(resto => {
-                console.log(resto)
                 $(`#resto-list`).append(
                     `<div class="card" style="width: 15rem;">
                     <img class="card-img-top" src="${(resto.restaurant.thumb) ? resto.restaurant.thumb : 'https://pixel77.com/wp-content/uploads/2013/11/pixel77-free-vector-flat-food-icons-1114-300.jpg' }" style="margin-bottom:1vh;" alt="Card image cap">
@@ -110,16 +109,21 @@ $(document).ready(function(){
                 $(`#${resto.restaurant.id}`).on('click', function(){
                     $.ajax({
                             method: 'patch',
-                            url:  `http://localhost:3000/addWishlist`,
+                            url:  `http://localhost:3000/test`,
                             data : {
-                                resto
-                            },
+                                    id: resto.restaurant.id,
+                                    name : resto.restaurant.name,
+                                    address : resto.restaurant.location.address,
+                                    thumb : resto.restaurant.thumb,
+                                    rating: resto.restaurant.user_rating.aggregate_rating,
+                                    url: resto.restaurant.url
+                                },
                             headers: {
                                 token : localStorage.getItem('token')
                             }
                         })
-                        .done( _ => {
-                            console.log('haha')
+                        .done( msg => {
+                            console.log(msg)
                         })
                         .fail(err => {
                             console.log(err)
