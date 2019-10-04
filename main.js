@@ -107,22 +107,23 @@ $(document).ready(function(){
                 )
 
                 $(`#${resto.restaurant.id}`).on('click', function(){
-                    console.log(resto);
-                    
                     $.ajax({
                             method: 'patch',
                             url:  `http://localhost:3000/user/addWishlist`,
                             data : {
-                                resto
-                            },
+                                    id: resto.restaurant.id,
+                                    name : resto.restaurant.name,
+                                    address : resto.restaurant.location.address,
+                                    thumb : resto.restaurant.thumb,
+                                    rating: resto.restaurant.user_rating.aggregate_rating,
+                                    url: resto.restaurant.url
+                                },
                             headers: {
                                 token : localStorage.getItem('token')
                             }
                         })
-                        .done( resto => {
-                            console.log("testtttttttttttttttttt");
-                            
-                            console.log(resto)
+                        .done( msg => {
+                            console.log(msg)
                         })
                         .fail(err => {
                             console.log(err, "eror client")
