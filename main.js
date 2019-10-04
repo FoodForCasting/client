@@ -18,16 +18,25 @@ $(document).ready(function(){
             <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
         )
         $(`#user-wishes`).empty()
+        //http://localhost:3000/addWishlist GET
+        $.ajax({
+            method: 'get',
+            url:  `http://localhost:3000/addWishlist`
+        })
+        .done( wishlist => {
+            wishlist.forEach(wish => {
+                $(`#user-wishes`).append(
+                    `<div class="card" >
+                    <div class="card-body">
+                    <h5 class="card-title">${wish.name}</h5>
+                    <p class="card-text">${wish.address}</p>
+                    <a href="#" class="btn btn-sm btn-danger">discard</a>
+                    </div>
+                    </div>`
+                )
+            });
+        })
         for(let i = 0; i < 5; i++){
-            $(`#user-wishes`).append(
-                `<div class="card" >
-                <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-sm btn-danger" ">discard</a>
-                </div>
-                </div>`
-            )
         }
     }else{
         // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
@@ -96,7 +105,7 @@ $(document).ready(function(){
                     location
                     </button>
                     
-                    <button type="button" class="btn btn-sm btn-success" onclick="addWishlist(this)" data-resto="${resto.restaurant}">
+                    <button id="${resto.restaurant.id}" type="button" class="btn btn-sm btn-success">
                     add to wishlist
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
@@ -105,6 +114,30 @@ $(document).ready(function(){
                     </div>
                 </div>`
                 )
+
+                $(`#${resto.restaurant.id}`).on('click', function(){
+                    $.ajax({
+                            method: 'patch',
+                            url:  `http://localhost:3000/user/addWishlist`,
+                            data : {
+                                    id: resto.restaurant.id,
+                                    name : resto.restaurant.name,
+                                    address : resto.restaurant.location.address,
+                                    thumb : resto.restaurant.thumb,
+                                    rating: resto.restaurant.user_rating.aggregate_rating,
+                                    url: resto.restaurant.url
+                                },
+                            headers: {
+                                token : localStorage.getItem('token')
+                            }
+                        })
+                        .done( msg => {
+                            console.log(msg)
+                        })
+                        .fail(err => {
+                            console.log(err)
+                        })
+                })
             })
         })
         .fail(err => {
@@ -266,24 +299,3 @@ function signOut() {
     $(`#user-wishes`).empty()
 }
 
-
-function addWishlist(identifier){ //resto = object
-    let resto = $(identifier).data('resto')
-    console.log(resto)
-    $.ajax({
-        method: 'patch',
-        url:  `http://localhost:3000/addWiishlist`,
-        data : {
-            resto
-        },
-        headers: {
-            token : localStorage.getItem('token')
-        }
-    })
-    .done( _ => {
-        console.log('haha')
-    })
-    .fail(err => {
-        console.log(err)
-    })
-}
