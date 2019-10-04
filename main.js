@@ -88,6 +88,7 @@ $(document).ready(function(){
         .done(({restaurants}) => {
             $(`#resto-list`).empty()
             restaurants.forEach(resto => {
+                console.log(resto)
                 $(`#resto-list`).append(
                     `<div class="card" style="width: 15rem;">
                     <img class="card-img-top" src="${(resto.restaurant.thumb) ? resto.restaurant.thumb : 'https://pixel77.com/wp-content/uploads/2013/11/pixel77-free-vector-flat-food-icons-1114-300.jpg' }" style="margin-bottom:1vh;" alt="Card image cap">
@@ -96,7 +97,7 @@ $(document).ready(function(){
                     location
                     </button>
                     
-                    <button type="button" class="btn btn-sm btn-success" onclick="addWishlist(this)" data-resto="${resto.restaurant}">
+                    <button id="${resto.restaurant.id}" type="button" class="btn btn-sm btn-success">
                     add to wishlist
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
@@ -105,6 +106,25 @@ $(document).ready(function(){
                     </div>
                 </div>`
                 )
+
+                $(`#${resto.restaurant.id}`).on('click', function(){
+                    $.ajax({
+                            method: 'patch',
+                            url:  `http://localhost:3000/addWishlist`,
+                            data : {
+                                resto
+                            },
+                            headers: {
+                                token : localStorage.getItem('token')
+                            }
+                        })
+                        .done( _ => {
+                            console.log('haha')
+                        })
+                        .fail(err => {
+                            console.log(err)
+                        })
+                })
             })
         })
         .fail(err => {
@@ -255,24 +275,3 @@ function signOut() {
     $(`#user-wishes`).empty()
 }
 
-
-function addWishlist(identifier){ //resto = object
-    let resto = $(identifier).data('resto')
-    console.log(resto)
-    $.ajax({
-        method: 'patch',
-        url:  `http://localhost:3000/addWiishlist`,
-        data : {
-            resto
-        },
-        headers: {
-            token : localStorage.getItem('token')
-        }
-    })
-    .done( _ => {
-        console.log('haha')
-    })
-    .fail(err => {
-        console.log(err)
-    })
-}
