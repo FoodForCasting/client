@@ -148,15 +148,16 @@ setTimeout(function(){
 //GOOGLE MAPS INIT MAP
 var map;
 function initMap(lat = -6.72732, lng = 107.24593) {
-    
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat, lng },
-        zoom: 16
-    });
-    marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map
-    })
+    if(cekLogin()){
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat, lng },
+            zoom: 16
+        });
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lng),
+            map: map
+        })
+    }
 
 
 }
@@ -177,6 +178,27 @@ $('#register').submit(e => {
         .done(token => {
             $("#logpass").val('')
             localStorage.setItem('token', token)
+            $(`#signinbtn`).hide()
+            $(`#signoutbtn`).show()
+
+            $(`#user-information`).empty()
+            $(`#user-information`).append(
+                    `<img src=http://localhost:3000/myAvatars/${data}" alt="" class="img-thumbnail"></img>
+                    <h5><b>${data}</b></h5>
+                    <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
+            )
+            $(`#user-wishes`).empty()
+            for(let i = 0; i < 5; i++){
+                $(`#user-wishes`).append(
+                    `<div class="card" >
+                    <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-sm btn-danger" ">discard</a>
+                    </div>
+                    </div>`
+                )
+            }
         })
         .fail(err=>{
             $('.errRegis').empty()
@@ -279,3 +301,12 @@ function signOut() {
     $(`#user-wishes`).empty()
 }
 
+function cekLogin(){
+    if (localStorage.getItem('token')){
+        return true
+    }
+    else{
+        $(`#modalForm`).modal("show")
+        return false
+    }
+}
