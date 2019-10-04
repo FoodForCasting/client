@@ -303,7 +303,20 @@ function signOut() {
 
 function cekLogin(){
     if (localStorage.getItem('token')){
-        return true
+        $.ajax({
+            url: 'http://localhost:3000/user/authentication',
+            method: 'get',
+            headers: {
+                token : localStorage.getItem('token')
+            }
+        })
+            .done(status =>{
+                return true
+            })
+            .fail(err => {
+                $(`#modalForm`).modal("show")
+                return false
+            })
     }
     else{
         $(`#modalForm`).modal("show")
