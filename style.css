@@ -1,0 +1,132 @@
+/* register login punya evan */
+body {
+    background-image: url('bg.jpg');
+}
+.sign {
+    display: flex;
+}
+
+.register{
+    width:50%;
+}
+
+.login{
+    width:50%;
+}
+
+
+/* ------ */
+#map {
+    height: 400px;
+    width: 770px;
+}
+
+.card{
+    margin: 5px;
+}
+input#location , input#food{
+    width: 300px;
+    margin: auto .5vh;
+}
+p{
+    font-size: 12px;
+}
+
+#user-wishlist{
+    
+    height: 50vh;
+    overflow: scroll;
+}
+
+.logo {
+    width: 15vw !important;
+}
+#user-container{
+    height: 100vh;
+    /* background-image: url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg'); */
+    /* background-image: url('bg.png'); */
+    overflow: hidden;
+    padding-top: 5vh;
+}
+#user-information{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    text-shadow: 1px 1px white;
+}
+#user-information img{
+    width: 200px;
+    margin-bottom: 1vh;
+}
+
+#search-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#search-bar button{
+    height: 35px;
+    width: 100px;
+}
+
+
+#main-page{
+    height: 100vh;
+    padding-top: 25px;
+    overflow: scroll;
+    padding-left: 20px;
+    
+}
+#resto-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#resto-list img{
+    height: 200px;
+}
+::-webkit-scrollbar {
+    width: 2px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+/* ----- */
+
+form {
+    padding: 30px;
+    /* background: white; */
+    background-color: rgba(236, 240, 241,0.8);
+    border-radius: 10px;
+}
+form input {
+    margin: 15px 0;
+    padding: 15px 10px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #bbb;
+    border-radius: 20px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+form input[type="password"]:focus,
+form input[type=text]:focus {
+    border-color: cornflowerblue;
+}
+
+input[type=submit] {
+    float: none !important;
+    padding: 15px 50px;
+    width: auto;
+    background: #1abc9c;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+}
