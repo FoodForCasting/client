@@ -18,16 +18,25 @@ $(document).ready(function(){
             <img class="logo" src="logo.png" alt="" style="width: 15vw !important;">`
         )
         $(`#user-wishes`).empty()
+        //http://localhost:3000/addWishlist GET
+        $.ajax({
+            method: 'get',
+            url:  `http://localhost:3000/addWishlist`
+        })
+        .done( wishlist => {
+            wishlist.forEach(wish => {
+                $(`#user-wishes`).append(
+                    `<div class="card" >
+                    <div class="card-body">
+                    <h5 class="card-title">${wish.name}</h5>
+                    <p class="card-text">${wish.address}</p>
+                    <a href="#" class="btn btn-sm btn-danger">discard</a>
+                    </div>
+                    </div>`
+                )
+            });
+        })
         for(let i = 0; i < 5; i++){
-            $(`#user-wishes`).append(
-                `<div class="card" >
-                <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-sm btn-danger" ">discard</a>
-                </div>
-                </div>`
-            )
         }
     }else{
         // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
@@ -109,7 +118,7 @@ $(document).ready(function(){
                 $(`#${resto.restaurant.id}`).on('click', function(){
                     $.ajax({
                             method: 'patch',
-                            url:  `http://localhost:3000/test`,
+                            url:  `http://localhost:3000/user/addWishlist`,
                             data : {
                                     id: resto.restaurant.id,
                                     name : resto.restaurant.name,
