@@ -19,25 +19,7 @@ $(document).ready(function(){
         )
         $(`#user-wishes`).empty()
         //http://localhost:3000/addWishlist GET
-        $.ajax({
-            method: 'get',
-            url:  `http://localhost:3000/addWishlist`
-        })
-        .done( wishlist => {
-            wishlist.forEach(wish => {
-                $(`#user-wishes`).append(
-                    `<div class="card" >
-                    <div class="card-body">
-                    <h5 class="card-title">${wish.name}</h5>
-                    <p class="card-text">${wish.address}</p>
-                    <a href="#" class="btn btn-sm btn-danger">discard</a>
-                    </div>
-                    </div>`
-                )
-            });
-        })
-        for(let i = 0; i < 5; i++){
-        }
+      getWishlist()
     }else{
         // $(`#user-container`).css('background-image', "url('https://as2.ftcdn.net/jpg/01/45/81/23/1000_F_145812369_SBaAsYoDOYbQFRL4Uv7YCBMKsGYT65GO.jpg')" )
         $(`#signoutbtn`).hide()
@@ -61,7 +43,7 @@ $(document).ready(function(){
                     <button type="button" class="btn btn-sm btn-info" onclick="initMap(${resto.restaurant.location.latitude},${resto.restaurant.location.longitude})"  data-target="#myMap">
                     location
                     </button>
-                    <button type="button" class="btn btn-sm btn-success" onclick="addWishlist(${resto})">
+                    <button id="${resto.restaurant.id}" type="button" class="btn btn-sm btn-success">
                     add to wishlist
                     </button>
                     <h5 class="card-title" style="margin-top:2vh;">${resto.restaurant.name}</h5>
@@ -72,6 +54,29 @@ $(document).ready(function(){
                     </div>
                 </div>`
                 )
+                $(`#${resto.restaurant.id}`).on('click', function(){
+                    $.ajax({
+                            method: 'patch',
+                            url:  `http://localhost:3000/user/addWishlist`,
+                            data : {
+                                    id: resto.restaurant.id,
+                                    name : resto.restaurant.name,
+                                    address : resto.restaurant.location.address,
+                                    thumb : resto.restaurant.thumb,
+                                    rating: resto.restaurant.user_rating.aggregate_rating,
+                                    url: resto.restaurant.url
+                                },
+                            headers: {
+                                token : localStorage.getItem('token')
+                            }
+                        })
+                        .done( msg => {
+                            getWishlist()
+                        })
+                        .fail(err => {
+                            console.log(err)
+                        })
+                })
         });
     })
     .fail(err => {
@@ -132,7 +137,7 @@ $(document).ready(function(){
                                 }
                             })
                             .done( msg => {
-                                console.log(msg)
+                                getWishlist()
                             })
                             .fail(err => {
                                 console.log(err)
@@ -325,7 +330,30 @@ function signOut() {
     $(`#user-wishes`).empty()
 }
 
-
+function getWishlist(){
+    $.ajax({
+        method: 'get',
+        url:  `http://localhost:3000/user/allWishlist`,
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    })
+    .done( wishlist => {
+        wishlist.forEach(wish => {
+            $(`#user-wishes`).append(
+                `<div class="card" >
+                <div class="card-body">
+                <h5 class="card-title">${wish.name}</h5>
+                <p class="card-text">${wish.address}</p>
+                <a href="#" class="btn btn-sm btn-danger">discard</a>
+                </div>
+                </div>`
+            )
+        });
+    })
+    .fail( err => {
+        alert(err)
+    })}
 function cekLogin(){
     if (localStorage.getItem('token')){
         return true
