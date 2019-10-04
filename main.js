@@ -320,10 +320,28 @@ function getWishlist(){
                 <div class="card-body">
                 <h5 class="card-title">${wish.name}</h5>
                 <p class="card-text">${wish.address}</p>
-                <a href="#" class="btn btn-sm btn-danger">discard</a>
+                <a href="#" class="btn btn-sm btn-danger" id="${wish.id}">discard</a>
                 </div>
-                </div>`
-            )
+                </div>`                
+                )
+            $(`#${wish.id}`).on('click' , function(){
+                $.ajax({
+                    method: 'patch',
+                    url:  `http://localhost:3000/user/delWishlist`,
+                    data: {
+                        wish
+                    },
+                    headers: {
+                        token: localStorage.getItem('token')
+                    }
+                })
+                .done( msg => {
+                    alert(msg)
+                })
+                .fail( err => {
+                    alert(err)
+                })
+            })
         });
     })
     .fail( err => {
