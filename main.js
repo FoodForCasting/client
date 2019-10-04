@@ -335,8 +335,8 @@ function getWishlist(){
                         token: localStorage.getItem('token')
                     }
                 })
-                .done( msg => {
-                    alert(msg)
+                .done( updated => {
+                    alert(`success add restaurant to wishlist`)
                 })
                 .fail( err => {
                     alert(err)
