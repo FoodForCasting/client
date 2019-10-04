@@ -170,6 +170,7 @@ function initMap(lat = -6.72732, lng = 107.24593) {
 // register dan login
 
 $('#register').submit(e => {
+    $('.successRegis').empty()
     e.preventDefault();
     $.ajax({
         method:'post',
@@ -180,7 +181,9 @@ $('#register').submit(e => {
         }
     })
         .done(token => {
-            $("#logpass").val('')
+            $('.errRegis').empty()
+            $("#regname").val('')
+            $("#regpass").val('')
             $('.successRegis').append(`<p style="color:green;">Successfully Registered</p>`)
             localStorage.setItem('token', token)
 
